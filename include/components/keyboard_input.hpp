@@ -15,9 +15,26 @@ namespace voidgame {
             }
 
             virtual void logic () {
+                al_get_keyboard_state (&state);
+
+                auto x = pos->get_x ();
+                auto y = pos->get_y ();
+
+                if (al_key_down (&state, ALLEGRO_KEY_RIGHT) )
+                    x += 2;
+                if (al_key_down (&state, ALLEGRO_KEY_LEFT) )
+                    x -= 2;
+                if (al_key_down (&state, ALLEGRO_KEY_DOWN) )
+                    y += 2;
+                if (al_key_down (&state, ALLEGRO_KEY_UP) )
+                    y -= 2;
+
+                pos->set_x (x);
+                pos->set_y (y);
             }
 
         private:
+            ALLEGRO_KEYBOARD_STATE state;
             std::shared_ptr<position> pos;
     };
 }

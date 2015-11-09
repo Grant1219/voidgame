@@ -7,6 +7,7 @@
 #include <component_manager.hpp>
 #include <components/position.hpp>
 #include <components/sprite.hpp>
+#include <components/keyboard_input.hpp>
 
 int main (int argc, char** argv) {
     // initialize basic systems
@@ -30,24 +31,25 @@ int main (int argc, char** argv) {
     // TODO testing component code
     std::cout << "Testing component code" << std::endl;
 
-    voidgame::component_manager compmgr;
-    auto ent1 = std::make_shared<voidgame::entity> ();
-    auto ent2 = std::make_shared<voidgame::entity> ();
-
     ALLEGRO_BITMAP* ship = al_load_bitmap ("data/ship.png");
 
+    auto ent1 = std::make_shared<voidgame::entity> ();
     auto pos1 = std::make_shared<voidgame::position> (ent1, 250, 400);
     ent1->add_component (voidgame::POSITION, pos1);
     auto sp1 = std::make_shared<voidgame::sprite> (ent1, ship);
     ent1->add_component (voidgame::SPRITE, sp1);
+    auto input = std::make_shared<voidgame::keyboard_input> (ent1);
 
+    auto ent2 = std::make_shared<voidgame::entity> ();
     auto pos2 = std::make_shared<voidgame::position> (ent2, 900, 200);
     ent2->add_component (voidgame::POSITION, pos2);
     auto sp2 = std::make_shared<voidgame::sprite> (ent2, ship);
     ent2->add_component (voidgame::SPRITE, sp2);
 
+    voidgame::component_manager compmgr;
     compmgr.add_component (pos1);
     compmgr.add_component (pos2);
+    compmgr.add_component (input);
     compmgr.add_component (sp1);
     compmgr.add_component (sp2);
     // TODO end testing
