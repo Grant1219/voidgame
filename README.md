@@ -1,5 +1,5 @@
 # README #
 
-****Dependencies****
+### Dependencies ###
 
 Allegro game programming library version 5.1
