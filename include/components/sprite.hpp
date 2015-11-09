@@ -18,11 +18,10 @@ namespace voidgame {
             }
 
             virtual void render () {
-                // TODO render actual bitmap
                 auto x = pos->get_x ();
                 auto y = pos->get_y ();
 
-                al_draw_filled_rectangle (x, y, x + 100, y + 100, al_map_rgb (255, 255, 255) );
+                al_draw_bitmap (bmp, x, y, 0);
             }
         private:
             ALLEGRO_BITMAP* bmp;

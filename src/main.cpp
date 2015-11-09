@@ -34,25 +34,23 @@ int main (int argc, char** argv) {
     auto ent1 = std::make_shared<voidgame::entity> ();
     auto ent2 = std::make_shared<voidgame::entity> ();
 
-    std::cout << "Entity created: ID " << ent1->get_id () << std::endl;
-    std::cout << "Entity created: ID " << ent2->get_id () << std::endl;
-
-    ALLEGRO_BITMAP* bmp = al_create_bitmap (100, 100);
+    ALLEGRO_BITMAP* ship = al_load_bitmap ("data/ship.png");
 
     auto pos1 = std::make_shared<voidgame::position> (ent1, 250, 400);
     ent1->add_component (voidgame::POSITION, pos1);
-    auto sp1 = std::make_shared<voidgame::sprite> (ent1, bmp);
+    auto sp1 = std::make_shared<voidgame::sprite> (ent1, ship);
     ent1->add_component (voidgame::SPRITE, sp1);
 
     auto pos2 = std::make_shared<voidgame::position> (ent2, 900, 200);
     ent2->add_component (voidgame::POSITION, pos2);
-    auto sp2 = std::make_shared<voidgame::sprite> (ent2, bmp);
+    auto sp2 = std::make_shared<voidgame::sprite> (ent2, ship);
     ent2->add_component (voidgame::SPRITE, sp2);
 
     compmgr.add_component (pos1);
     compmgr.add_component (pos2);
     compmgr.add_component (sp1);
     compmgr.add_component (sp2);
+    // TODO end testing
 
     // prepare to begin the main loop
     al_clear_to_color (al_map_rgb (0, 0, 0) );
@@ -85,6 +83,7 @@ int main (int argc, char** argv) {
             redraw = false;
             al_clear_to_color (al_map_rgb (0, 0, 0) );
 
+            // TODO more testing
             compmgr.logic ();
             compmgr.render ();
 
@@ -93,7 +92,7 @@ int main (int argc, char** argv) {
     }
 
     // clean up
-    al_destroy_bitmap (bmp);
+    al_destroy_bitmap (ship);
 
     al_destroy_timer (frame_timer);
     al_destroy_event_queue (equeue);
