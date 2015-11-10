@@ -14,7 +14,9 @@ namespace voidgame {
 
     class component {
         public:
-            component (std::shared_ptr<entity> _ent, uint16_t _type) : type (_type), ent (std::move (_ent) ) {}
+            component (std::shared_ptr<entity> _ent, uint16_t _type) : type (_type), ent (_ent) {}
+
+            uint16_t get_type () { return type; }
 
             virtual void logic () {}
             virtual void render () {}

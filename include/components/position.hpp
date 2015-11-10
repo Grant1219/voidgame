@@ -8,8 +8,8 @@ namespace voidgame {
         public:
             position (std::shared_ptr<entity> _ent, const uint32_t _x, const uint32_t _y) : component (_ent, POSITION), x (_x), y (_y) {}
 
-            const uint32_t get_x () { return x; }
-            const uint32_t get_y () { return y; }
+            uint32_t get_x () { return x; }
+            uint32_t get_y () { return y; }
             void set_x (const uint32_t _x) { x = _x; }
             void set_y (const uint32_t _y) { y = _y; }
 
