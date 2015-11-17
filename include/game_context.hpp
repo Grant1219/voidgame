@@ -18,7 +18,12 @@ namespace voidgame {
 
             void logic ();
             void render ();
+
+            void set_done (bool _state) { done = _state; }
+            bool is_done () { return done; }
         private:
+            bool done = false;
+            std::vector<std::shared_ptr<entity> > entities;
             std::map<uint16_t, std::shared_ptr<component_manager> > managers;
     };
 }

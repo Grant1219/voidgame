@@ -21,6 +21,8 @@ namespace voidgame {
             if (mgr != managers.end () )
                 mgr->second->add_component (c.second);
         }
+
+        entities.push_back (_ent);
     }
 
     void game_context::logic () {

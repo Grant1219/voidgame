@@ -17,7 +17,7 @@ namespace voidgame {
                 pos = std::static_pointer_cast<position> (ent->get_component (POSITION) );
             }
 
-            virtual void render () {
+            virtual void render () override {
                 auto x = pos->get_x ();
                 auto y = pos->get_y ();
 

@@ -8,8 +8,10 @@
 namespace voidgame {
     enum comp_type {
         POSITION = 1,
+        THRUST,
         SPRITE,
-        KEYBOARD_INPUT
+        COLLISION,
+        PLAYER_CONTROL
     };
 
     class component {

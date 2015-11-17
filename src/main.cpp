@@ -7,8 +7,9 @@
 #include <game_context.hpp>
 #include <component_manager.hpp>
 #include <components/position.hpp>
+#include <components/thrust.hpp>
 #include <components/sprite.hpp>
-#include <components/keyboard_input.hpp>
+#include <components/player_control.hpp>
 
 int main (int argc, char** argv) {
     // initialize basic systems
@@ -30,35 +31,29 @@ int main (int argc, char** argv) {
     al_register_event_source (equeue, al_get_keyboard_event_source () );
 
     // TODO testing component code
-    std::cout << "Testing component code" << std::endl;
-
     ALLEGRO_BITMAP* ship = al_load_bitmap ("data/ship.png");
 
     voidgame::game_context game;
 
     // create entity 1 and all its components
     auto ent1 = std::make_shared<voidgame::entity> ();
-    auto pos1 = std::make_shared<voidgame::position> (ent1, 250, 400);
-    ent1->add_component (pos1);
-    auto sp1 = std::make_shared<voidgame::sprite> (ent1, ship);
-    ent1->add_component (sp1);
-    auto input = std::make_shared<voidgame::keyboard_input> (ent1);
-    ent1->add_component (input);
-
-    // create entity 2
-    auto ent2 = std::make_shared<voidgame::entity> ();
-    auto pos2 = std::make_shared<voidgame::position> (ent2, 900, 200);
-    ent2->add_component (pos2);
-    auto sp2 = std::make_shared<voidgame::sprite> (ent2, ship);
-    ent2->add_component (sp2);
+    ent1->add_component (std::make_shared<voidgame::position> (ent1, 250, 400) );
+    ent1->add_component (std::make_shared<voidgame::sprite> (ent1, ship) );
+    ent1->add_component (std::make_shared<voidgame::thrust> (ent1, 2.0, 1.5, 0.01, 0.01) );
+    ent1->add_component (std::make_shared<voidgame::player_control> (ent1) );
 
     // add a component manager to the game context
     auto compmgr = std::make_shared<voidgame::component_manager> ();
-    game.add_component_manager (std::vector<uint16_t> {voidgame::SPRITE, voidgame::KEYBOARD_INPUT}, compmgr);
+    game.add_component_manager (std::vector<uint16_t> {voidgame::SPRITE,
+                                                       voidgame::PLAYER_CONTROL,
+                                                       voidgame::THRUST},
+                                                       compmgr);
 
     // add entities
-    game.add_entity (ent1);
-    game.add_entity (ent2);
+    game.add_entity (std::move (ent1) );
+
+    if (ent1 == nullptr)
+        std::cout << "ent1 has been moved!" << std::endl;
 
     // TODO end testing
 
@@ -68,11 +63,10 @@ int main (int argc, char** argv) {
 
     al_start_timer (frame_timer);
 
-    auto done = false;
     auto redraw = false;
 
     // handle events and redrawing the screen
-    while (!done) {
+    while (!game.is_done () ) {
         ALLEGRO_EVENT ev;
 
         al_wait_for_event (equeue, &ev);
@@ -80,20 +74,20 @@ int main (int argc, char** argv) {
         if (ev.type == ALLEGRO_EVENT_TIMER)
             redraw = true;
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-            done = true;
+            game.set_done (true);
         else if (ev.type == ALLEGRO_EVENT_KEY_UP) {
             switch (ev.keyboard.keycode) {
                 case ALLEGRO_KEY_ESCAPE:
-                    done = true;
+                    game.set_done (true);
                     break;
             }
         }
 
+        // right now the game speed is locked to 60 FPS, logic and rendering
         if (redraw && al_is_event_queue_empty (equeue) ) {
             redraw = false;
             al_clear_to_color (al_map_rgb (0, 0, 0) );
 
-            // TODO more testing
             game.logic ();
             game.render ();
 
