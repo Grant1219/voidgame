@@ -23,6 +23,10 @@ namespace voidgame {
 
                 al_draw_bitmap (bmp, x, y, 0);
             }
+
+            int get_width () { return al_get_bitmap_width (bmp); }
+            int get_height () { return al_get_bitmap_height (bmp); }
+
         private:
             ALLEGRO_BITMAP* bmp;
             std::shared_ptr<position> pos;

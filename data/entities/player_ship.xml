@@ -1,0 +1,6 @@
+<entity>
+	<component type="position" x="500" y="400"/>
+	<component type="sprite" img="data/media/ship.png"/>
+	<component type="thrust" max_h="2.0" max_v="1.5" h_slowdown="0.01" v_slowdown="0.01"/>
+	<component type="player_control"/>
+</entity>

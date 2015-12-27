@@ -1,10 +1,11 @@
 #include <entity.hpp>
 #include <component.hpp>
+#include <game_context.hpp>
 
 namespace voidgame {
     uint64_t entity::nextid = 1;
 
-    entity::entity () {
+    entity::entity (game_context& _context) : context (_context) {
         eid = entity::nextid;
         entity::nextid++;
     }

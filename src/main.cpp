@@ -10,6 +10,7 @@
 #include <components/thrust.hpp>
 #include <components/sprite.hpp>
 #include <components/player_control.hpp>
+#include <components/collision.hpp>
 
 int main (int argc, char** argv) {
     // initialize basic systems
@@ -31,22 +32,24 @@ int main (int argc, char** argv) {
     al_register_event_source (equeue, al_get_keyboard_event_source () );
 
     // TODO testing component code
-    ALLEGRO_BITMAP* ship = al_load_bitmap ("data/ship.png");
+    ALLEGRO_BITMAP* ship = al_load_bitmap ("data/media/ship.png");
 
-    voidgame::game_context game;
+    voidgame::game_context game (display);
 
     // create entity 1 and all its components
-    auto ent1 = std::make_shared<voidgame::entity> ();
+    auto ent1 = std::make_shared<voidgame::entity> (game);
     ent1->add_component (std::make_shared<voidgame::position> (ent1, 250, 400) );
     ent1->add_component (std::make_shared<voidgame::sprite> (ent1, ship) );
     ent1->add_component (std::make_shared<voidgame::thrust> (ent1, 2.0, 1.5, 0.01, 0.01) );
     ent1->add_component (std::make_shared<voidgame::player_control> (ent1) );
+    ent1->add_component (std::make_shared<voidgame::collision> (ent1) );
 
     // add a component manager to the game context
     auto compmgr = std::make_shared<voidgame::component_manager> ();
     game.add_component_manager (std::vector<uint16_t> {voidgame::SPRITE,
                                                        voidgame::PLAYER_CONTROL,
-                                                       voidgame::THRUST},
+                                                       voidgame::THRUST,
+                                                       voidgame::COLLISION},
                                                        compmgr);
 
     // add entities
