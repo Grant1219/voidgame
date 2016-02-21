@@ -1,17 +1,28 @@
 #ifndef COMPONENT_HPP
 #define COMPONENT_HPP
 
+#include <map>
 #include <memory>
 
 #include <entity.hpp>
 
 namespace voidgame {
-    enum comp_type {
+    // enum used during runtime
+    enum comp_type : uint16_t {
         POSITION = 1,
         THRUST,
         SPRITE,
         COLLISION,
         PLAYER_CONTROL
+    };
+
+    // mapping used during component file loading
+    static std::map<std::string, uint16_t> comp_map {
+        {"position", POSITION},
+        {"thrust", THRUST},
+        {"sprite", SPRITE},
+        {"collision", COLLISION},
+        {"player_control", PLAYER_CONTROL},
     };
 
     class component {

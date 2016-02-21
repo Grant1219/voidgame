@@ -8,7 +8,7 @@ namespace voidgame {
     class thrust : public component {
         public:
             thrust (std::shared_ptr<entity> _ent, const double _max_h_thrust, const double _max_v_thrust, const double _h_slowdown, const double _v_slowdown)
-                : component (_ent, THRUST),
+                : component (_ent, comp_type::THRUST),
                   max_h_thrust (_max_h_thrust),
                   max_v_thrust (_max_v_thrust),
                   h_slowdown (_h_slowdown),

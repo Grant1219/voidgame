@@ -12,6 +12,8 @@
 #include <components/player_control.hpp>
 #include <components/collision.hpp>
 
+using namespace voidgame;
+
 int main (int argc, char** argv) {
     // initialize basic systems
     al_init ();
@@ -34,29 +36,26 @@ int main (int argc, char** argv) {
     // TODO testing component code
     ALLEGRO_BITMAP* ship = al_load_bitmap ("data/media/ship.png");
 
-    voidgame::game_context game (display);
+    game_context game (display);
 
     // create entity 1 and all its components
-    auto ent1 = std::make_shared<voidgame::entity> (game);
-    ent1->add_component (std::make_shared<voidgame::position> (ent1, 250, 400) );
-    ent1->add_component (std::make_shared<voidgame::sprite> (ent1, ship) );
-    ent1->add_component (std::make_shared<voidgame::thrust> (ent1, 2.0, 1.5, 0.01, 0.01) );
-    ent1->add_component (std::make_shared<voidgame::player_control> (ent1) );
-    ent1->add_component (std::make_shared<voidgame::collision> (ent1) );
+    auto ent1 = std::make_shared<entity> (game);
+    ent1->add_component (std::make_shared<position> (ent1, 250, 400) );
+    ent1->add_component (std::make_shared<sprite> (ent1, ship) );
+    ent1->add_component (std::make_shared<thrust> (ent1, 2.0, 1.5, 0.01, 0.01) );
+    ent1->add_component (std::make_shared<player_control> (ent1) );
+    ent1->add_component (std::make_shared<collision> (ent1) );
 
     // add a component manager to the game context
-    auto compmgr = std::make_shared<voidgame::component_manager> ();
-    game.add_component_manager (std::vector<uint16_t> {voidgame::SPRITE,
-                                                       voidgame::PLAYER_CONTROL,
-                                                       voidgame::THRUST,
-                                                       voidgame::COLLISION},
+    auto compmgr = std::make_shared<component_manager> ();
+    game.add_component_manager (std::vector<uint16_t> {SPRITE,
+                                                       PLAYER_CONTROL,
+                                                       THRUST,
+                                                       COLLISION},
                                                        compmgr);
 
     // add entities
     game.add_entity (std::move (ent1) );
-
-    if (ent1 == nullptr)
-        std::cout << "ent1 has been moved!" << std::endl;
 
     // TODO end testing
 

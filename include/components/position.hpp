@@ -6,7 +6,8 @@
 namespace voidgame {
     class position : public component {
         public:
-            position (std::shared_ptr<entity> _ent, const double _x, const double _y) : component (_ent, POSITION), x (_x), y (_y) {}
+            position (std::shared_ptr<entity> _ent, const double _x, const double _y)
+                : component (_ent, POSITION), x (_x), y (_y) {}
 
             double get_x () { return x; }
             double get_y () { return y; }
