@@ -3,6 +3,8 @@
 
 #include <map>
 #include <memory>
+#include <functional>
+#include <iostream>
 
 #include <entity.hpp>
 
@@ -17,6 +19,7 @@ namespace voidgame {
     };
 
     // mapping used during component file loading
+    /*
     static std::map<std::string, uint16_t> comp_map {
         {"position", POSITION},
         {"thrust", THRUST},
@@ -24,6 +27,7 @@ namespace voidgame {
         {"collision", COLLISION},
         {"player_control", PLAYER_CONTROL},
     };
+    */
 
     class component {
         public:
@@ -38,6 +42,16 @@ namespace voidgame {
             uint16_t type;
             std::shared_ptr<entity> ent;
     };
+
+    static std::map<const std::string, std::function<std::shared_ptr<component>(std::shared_ptr<entity>)>>& factory_map () {
+        static std::map<const std::string, std::function<std::shared_ptr<component>(std::shared_ptr<entity>)>> cm;
+        return cm;
+    }
+
+    static bool register_factory (const std::string& _type, std::function<std::shared_ptr<component>(std::shared_ptr<entity>)> _func) {
+        factory_map ()[_type] = _func;
+        return true;
+    }
 }
 
 #endif

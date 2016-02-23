@@ -57,6 +57,12 @@ int main (int argc, char** argv) {
     // add entities
     game.add_entity (std::move (ent1) );
 
+    // test factory method
+    //voidgame::comp_map ()["position"] ();
+    i//std::shared_ptr<entity> testy = factory_map ()["position"] (;
+    //func = voidgame::position::factory;
+    //func ();
+
     // TODO end testing
 
     // prepare to begin the main loop

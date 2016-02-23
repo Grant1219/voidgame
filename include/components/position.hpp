@@ -1,6 +1,8 @@
 #ifndef COMP_POSITION_HPP
 #define COMP_POSITION_HPP
 
+#include <iostream>
+
 #include <component.hpp>
 
 namespace voidgame {
@@ -14,9 +16,16 @@ namespace voidgame {
             void set_x (const double _x) { x = _x; }
             void set_y (const double _y) { y = _y; }
 
+        public:
+            static std::shared_ptr<position> factory (std::shared_ptr<entity> _ent) {
+                return std::make_shared<position> (_ent, 0, 0);
+            }
+
         private:
             double x, y;
     };
+
+    static bool position_factory = voidgame::register_factory ("position", std::function<std::shared_ptr<component>(std::shared_ptr<entity>)> (voidgame::position::factory) );
 }
 
 #endif
