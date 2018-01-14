@@ -59,7 +59,7 @@ int main (int argc, char** argv) {
 
     // test factory method
     //voidgame::comp_map ()["position"] ();
-    i//std::shared_ptr<entity> testy = factory_map ()["position"] (;
+    //std::shared_ptr<entity> testy = factory_map ()["position"] (;
     //func = voidgame::position::factory;
     //func ();
 
